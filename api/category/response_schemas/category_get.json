@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GET /categories/{channel_type_and_account_id}",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "ChannelType": { "type": "string" },
+      "ChannelAccountId": { "type": "string" },
+      "Category": { "type": "string" }
+    }
+  },
+  "additionalProperties": false
+}

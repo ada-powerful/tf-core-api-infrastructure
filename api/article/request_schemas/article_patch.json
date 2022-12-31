@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "POST /articles/{article_id}",
+  "type": "object",
+  "properties": {
+    "channel_type": { "type": "string" },
+    "channel_account_id": { "type": "string" },
+    "category": { "type": "string" },
+    "content": { "type": "string" },
+    "author": { "type": "string" },
+    "title":    { "type": "string" },
+    "ai_clue": { "type": "string" },
+    "prev_article_id": { "type": "string" },
+    "next_article_id": { "type": "string" }
+  },
+  "required": ["channel_type", "channel_account_id", "category"],
+  "additionalProperties": false
+}

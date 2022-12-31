@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PATCH /channels/{channel_type_and_account_id}",
+  "type": "object",
+  "properties": {
+    "channel_category": { "type": "string" },
+    "operator":    { "type": "string" },
+    "bucket_name": { "type": "string" }
+  },
+  "additionalProperties": false
+}

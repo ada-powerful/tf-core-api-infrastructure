@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "POST /channels",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "channel_account_id": { "type": "string" },
+      "channel_type": { "type": "string" },
+      "channel_category": { "type": "string" },
+      "operator_name":    { "type": "string" },
+      "bucket_name": { "type": "string" }
+    },
+    "required": ["channel_account_id", "channel_type"]
+  },
+  "additionalProperties": false
+}
