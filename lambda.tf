@@ -91,6 +91,25 @@ resource "aws_lambda_function" "articles" {
   role = "${aws_iam_role.lambda_exec.arn}"
 }
 
+resource "aws_lambda_function" "packager" {
+  depends_on = [
+    resource.aws_s3_bucket_server_side_encryption_configuration.lambda_bucket_encryption
+  ]
+  function_name = "Packager"
+
+  # The bucket name as created earlier with "aws s3api create-bucket"
+  s3_bucket = module.core_api_s3.s3_bucket_id
+  s3_key    = format("%s/packager.zip",var.api_version)
+
+  # "main" is the filename within the zip file (main.js) and "handler"
+  # is the name of the property under which the handler function was
+  # exported in that file.
+  handler = "main.handler"
+  runtime = "python3.9"
+
+  role = "${aws_iam_role.lambda_packager_exec.arn}"
+}
+
 data "aws_iam_policy_document" "lambda_core_assume_role_policy" {
   statement {
     actions = ["sts:AssumeRole"]
@@ -126,6 +145,19 @@ data "aws_iam_policy_document" "lambda_core_ddb_inline_policy" {
   }
 }
 
+data "aws_iam_policy_document" "lambda_core_sqs_inline_policy" {
+  statement {
+    actions   = [
+        "sqs:SendMessageBatch",
+        "sqs:SendMessage",
+        "sqs:GetQueueUrl"
+    ]
+    resources = [
+        format("arn:aws:sqs:us-west-2:%s:aigc-content-producer-queue", data.aws_caller_identity.current.account_id)
+    ]
+  }
+}
+
 data "aws_iam_policy_document" "lambda_core_cw_log_stream_inline_policy" {
   statement {
     actions   = [
@@ -153,6 +185,25 @@ resource "aws_iam_role" "lambda_exec" {
   inline_policy {
     name   = "lambda_core_ddb_inline_policy"
     policy = data.aws_iam_policy_document.lambda_core_ddb_inline_policy.json
+  }
+  
+  inline_policy {
+    name   = "lambda_core_cw_log_stream_inline_policy"
+    policy = data.aws_iam_policy_document.lambda_core_cw_log_stream_inline_policy.json
+  }
+  
+  inline_policy {
+    name   = "lambda_core_cw_log_group_inline_policy"
+    policy = data.aws_iam_policy_document.lambda_core_cw_log_group_inline_policy.json
+  }
+}
+
+resource "aws_iam_role" "lambda_packager_exec" {
+  name               = "lambda_core_api_packager_role"
+  assume_role_policy = data.aws_iam_policy_document.lambda_core_assume_role_policy.json
+  inline_policy {
+    name   = "lambda_core_sqs_inline_policy"
+    policy = data.aws_iam_policy_document.lambda_core_sqs_inline_policy.json
   }
   
   inline_policy {

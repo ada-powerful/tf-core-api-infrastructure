@@ -31,16 +31,21 @@ def upload_file(file_name, bucket, object_name=None):
         return False
     return True
 
+def upload_artifact(bucket, api_version, repo_name, artifact_name):
+    bashCommand = "git clone git@github.com:ada-powerful/{}.git".format(repo_name)
+    process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
+    output, error = process.communicate()
+    shutil.make_archive(artifact_name, 'zip', './{}'.format(repo_name))
+    s3 = boto3.client('s3')
+    with open("./{}.zip".format(artifact_name), "rb") as f:
+        s3.upload_fileobj(f, bucket, "{}/{}.zip".format(api_version, artifact_name))
+    shutil.rmtree('./{}/'.format(repo_name))
+    pathlib.Path("./{}.zip".format(artifact_name)).unlink()
+
 if __name__ == '__main__':
     bucket = sys.argv[1]
     api_version = sys.argv[2]
-    bashCommand = "git clone git@github.com:ada-powerful/SiteCoreAPI.git"
-    process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
-    output, error = process.communicate()
-    shutil.make_archive('core', 'zip', './SiteCoreAPI')
-    s3 = boto3.client('s3')
-    with open("./core.zip", "rb") as f:
-        s3.upload_fileobj(f, bucket, "{}/core.zip".format(api_version))
-    shutil.rmtree('./SiteCoreAPI/')
-    pathlib.Path("./core.zip").unlink()
+
+    upload_artifact(bucket, api_version, 'SiteCoreAPI', 'core')
+    upload_artifact(bucket, api_version, 'py-aigc-packager', 'packager')
 
