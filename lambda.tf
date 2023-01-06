@@ -11,6 +11,10 @@ module "core_api_s3" {
   block_public_policy     = true
   ignore_public_acls      = true
   restrict_public_buckets = true
+  
+  versioning = {
+    enabled = true
+  }
 }
 
 data "aws_caller_identity" "current" {}
