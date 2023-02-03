@@ -5,7 +5,8 @@
   "properties": {
     "channel_category": { "type": "string" },
     "operator":    { "type": "string" },
-    "bucket_name": { "type": "string" }
-  },
-  "additionalProperties": false
+    "bucket_name": { "type": "string" },
+    "canvas_id": { "type": "string" },
+    "watermark_id": { "type": "string" }
+  }
 }

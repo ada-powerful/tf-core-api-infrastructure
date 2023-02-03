@@ -41,6 +41,20 @@ resource "aws_api_gateway_resource" "channel" {
   path_part   = "{${local.leaf_resource_name}}"
 }
 
+module "api-gateway-enable-cors-channels" {
+  source  = "squidfunk/api-gateway-enable-cors/aws"
+  version = "0.3.3"
+  api_id          = var.api_id
+  api_resource_id = aws_api_gateway_resource.channels.id
+}
+
+module "api-gateway-enable-cors-channel" {
+  source  = "squidfunk/api-gateway-enable-cors/aws"
+  version = "0.3.3"
+  api_id          = var.api_id
+  api_resource_id = aws_api_gateway_resource.channel.id
+}
+
 resource "aws_api_gateway_deployment" "this" {
   depends_on = [
     module.channels_get_api,

@@ -41,6 +41,20 @@ resource "aws_api_gateway_resource" "category" {
   path_part   = "{${local.leaf_resource_name}}"
 }
 
+module "api-gateway-enable-cors-categories" {
+  source  = "squidfunk/api-gateway-enable-cors/aws"
+  version = "0.3.3"
+  api_id          = var.api_id
+  api_resource_id = aws_api_gateway_resource.categories.id
+}
+
+module "api-gateway-enable-cors-category" {
+  source  = "squidfunk/api-gateway-enable-cors/aws"
+  version = "0.3.3"
+  api_id          = var.api_id
+  api_resource_id = aws_api_gateway_resource.category.id
+}
+
 resource "aws_api_gateway_deployment" "this" {
   depends_on = [
     module.categories_get_api,

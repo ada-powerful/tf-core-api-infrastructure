@@ -12,7 +12,5 @@
     "ai_clue": { "type": "string" },
     "prev_article_id": { "type": "string" },
     "next_article_id": { "type": "string" }
-  },
-  "required": ["channel_type", "channel_account_id", "category"],
-  "additionalProperties": false
+  }
 }

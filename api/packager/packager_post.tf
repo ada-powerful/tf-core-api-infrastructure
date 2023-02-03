@@ -10,6 +10,7 @@ module "packager_post_api" {
                            "method.request.querystring.channel_type" = false
                            "method.request.querystring.channel_account_id" = false
                            "method.request.querystring.category" = false
+                           "method.request.querystring.topic_id" = false
                            "method.request.header.Authorization"  = true
                          }
   request_validator_id = var.request_validator_id

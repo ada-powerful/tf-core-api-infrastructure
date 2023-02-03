@@ -6,8 +6,8 @@ module "categories_get_api" {
   lambda_function_arn  = var.lambda_function_arn
   request_validator_id = var.request_validator_id
   request_parameters   = {
-                           "method.request.querystring.channel_type" = true
-                           "method.request.querystring.channel_account_id" = true
+                           "method.request.querystring.search_by" = true
+                           "method.request.querystring.hash"      = true
                          }
   request_models       = {}
   response_models      = {
@@ -22,3 +22,4 @@ resource "aws_api_gateway_model" "categories_get_response_model" {
   content_type = "application/json"
   schema       = file("${path.module}/response_schemas/categories_get.json")
 }
+

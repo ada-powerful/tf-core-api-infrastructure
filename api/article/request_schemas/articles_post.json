@@ -13,9 +13,9 @@
       "title":    { "type": "string" },
       "ai_clue": { "type": "string" },
       "prev_article_id": { "type": "string" },
-      "next_article_id": { "type": "string" }
+      "next_article_id": { "type": "string" },
+      "topic_id": { "type": "string" }
     },
     "required": ["channel_type", "channel_account_id", "category", "title", "content", "author"]
-  },
-  "additionalProperties": false
+  }
 }

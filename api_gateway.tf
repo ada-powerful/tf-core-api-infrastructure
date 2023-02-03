@@ -53,6 +53,42 @@ module "article_api" {
   request_validator_id = "${aws_api_gateway_request_validator.core_api_request_validator.id}"
 }
 
+module "topic_api" {
+  source  = "./api/topic"
+  
+  api_id               = "${aws_api_gateway_rest_api.site_core_api_gateway.id}"
+  api_execution_arn    = "${aws_api_gateway_rest_api.site_core_api_gateway.execution_arn}"
+  root_resource_id     = "${aws_api_gateway_rest_api.site_core_api_gateway.root_resource_id}"
+  lambda_function_arn  = "${aws_lambda_function.topics.invoke_arn}"
+  lambda_function_name = "${aws_lambda_function.topics.function_name}"
+  authorizer_id        =  "${aws_api_gateway_authorizer.authorizer.id}"
+  request_validator_id = "${aws_api_gateway_request_validator.core_api_request_validator.id}"
+}
+
+module "operator_api" {
+  source  = "./api/operator"
+  
+  api_id               = "${aws_api_gateway_rest_api.site_core_api_gateway.id}"
+  api_execution_arn    = "${aws_api_gateway_rest_api.site_core_api_gateway.execution_arn}"
+  root_resource_id     = "${aws_api_gateway_rest_api.site_core_api_gateway.root_resource_id}"
+  lambda_function_arn  = "${aws_lambda_function.operators.invoke_arn}"
+  lambda_function_name = "${aws_lambda_function.operators.function_name}"
+  authorizer_id        =  "${aws_api_gateway_authorizer.authorizer.id}"
+  request_validator_id = "${aws_api_gateway_request_validator.core_api_request_validator.id}"
+}
+
+module "prompt_api" {
+  source  = "./api/prompt"
+  
+  api_id               = "${aws_api_gateway_rest_api.site_core_api_gateway.id}"
+  api_execution_arn    = "${aws_api_gateway_rest_api.site_core_api_gateway.execution_arn}"
+  root_resource_id     = "${aws_api_gateway_rest_api.site_core_api_gateway.root_resource_id}"
+  lambda_function_arn  = "${aws_lambda_function.prompts.invoke_arn}"
+  lambda_function_name = "${aws_lambda_function.prompts.function_name}"
+  authorizer_id        =  "${aws_api_gateway_authorizer.authorizer.id}"
+  request_validator_id = "${aws_api_gateway_request_validator.core_api_request_validator.id}"
+}
+
 module "packager_api" {
   source  = "./api/packager"
   

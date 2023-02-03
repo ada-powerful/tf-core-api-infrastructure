@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GET /operators",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "OperatorName": { "type": "string" },
+      "Channels": {
+        "type": "object",
+        "patternProperties": {
+          "^[A-Za-z0-9\\._%\\+-]+@[A-Za-z0-9\\.-]+\\.[A-Za-z]{2,6}$": {
+            "type": "object",
+            "patternProperties": {
+              "^[A-Za-z0-9\\._%\\+-]+@[A-Za-z0-9\\.-]+\\.[A-Za-z]{2,6}$": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

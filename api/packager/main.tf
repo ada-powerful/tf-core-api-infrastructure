@@ -21,6 +21,13 @@ resource "aws_api_gateway_resource" "packager" {
   path_part   = local.resource_name
 }
 
+module "api-gateway-enable-cors-packager" {
+  source  = "squidfunk/api-gateway-enable-cors/aws"
+  version = "0.3.3"
+  api_id          = var.api_id
+  api_resource_id = aws_api_gateway_resource.packager.id
+}
+
 resource "aws_api_gateway_deployment" "this" {
   depends_on = [
     module.packager_post_api

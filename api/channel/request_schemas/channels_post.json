@@ -12,6 +12,5 @@
       "bucket_name": { "type": "string" }
     },
     "required": ["channel_account_id", "channel_type"]
-  },
-  "additionalProperties": false
+  }
 }

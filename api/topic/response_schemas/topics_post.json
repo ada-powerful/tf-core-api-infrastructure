@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "POST /topics",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "TopicsId": { "type": "string" },
+      "Title": { "type": "string" }
+    }
+  },
+  "additionalProperties": false
+}
