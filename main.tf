@@ -20,3 +20,16 @@ provider "aws" {
   region = "us-west-2"
   shared_credentials_files = ["./.aws/credentials"]
 }
+
+data "aws_iam_policy_document" "lambda_ec2_inline_policy" {
+  statement {
+    actions   = [
+        "ec2:DescribeNetworkInterfaces",
+        "ec2:CreateNetworkInterface",
+        "ec2:DeleteNetworkInterface",
+        "ec2:DescribeInstances",
+        "ec2:AttachNetworkInterface"
+    ]
+    resources = ["*"]
+  }
+}

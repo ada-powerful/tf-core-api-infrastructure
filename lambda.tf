@@ -51,6 +51,10 @@ resource "aws_lambda_function" "channels" {
   runtime = "python3.9"
 
   role = "${aws_iam_role.lambda_channels_exec.arn}"
+  vpc_config {
+    subnet_ids = var.subnet_ids
+    security_group_ids = var.security_group_ids
+  }
 }
 
 resource "aws_lambda_function" "categories" {
@@ -70,6 +74,10 @@ resource "aws_lambda_function" "categories" {
   runtime = "python3.9"
 
   role = "${aws_iam_role.lambda_exec.arn}"
+  vpc_config {
+    subnet_ids = var.subnet_ids
+    security_group_ids = var.security_group_ids
+  }
 }
 
 resource "aws_lambda_function" "articles" {
@@ -89,6 +97,10 @@ resource "aws_lambda_function" "articles" {
   runtime = "python3.9"
 
   role = "${aws_iam_role.lambda_exec.arn}"
+  vpc_config {
+    subnet_ids = var.subnet_ids
+    security_group_ids = var.security_group_ids
+  }
 }
 
 resource "aws_lambda_function" "topics" {
@@ -108,6 +120,10 @@ resource "aws_lambda_function" "topics" {
   runtime = "python3.9"
 
   role = "${aws_iam_role.lambda_topics_exec.arn}"
+  vpc_config {
+    subnet_ids = var.subnet_ids
+    security_group_ids = var.security_group_ids
+  }
 }
 
 resource "aws_lambda_function" "operators" {
@@ -127,6 +143,10 @@ resource "aws_lambda_function" "operators" {
   runtime = "python3.9"
 
   role = "${aws_iam_role.lambda_exec.arn}"
+  vpc_config {
+    subnet_ids = var.subnet_ids
+    security_group_ids = var.security_group_ids
+  }
 }
 
 resource "aws_lambda_function" "prompts" {
@@ -146,6 +166,10 @@ resource "aws_lambda_function" "prompts" {
   runtime = "python3.9"
 
   role = "${aws_iam_role.lambda_exec.arn}"
+  vpc_config {
+    subnet_ids = var.subnet_ids
+    security_group_ids = var.security_group_ids
+  }
 }
 
 resource "aws_lambda_function" "packager" {
@@ -165,6 +189,10 @@ resource "aws_lambda_function" "packager" {
   runtime = "python3.9"
 
   role = "${aws_iam_role.lambda_packager_exec.arn}"
+  vpc_config {
+    subnet_ids = var.subnet_ids
+    security_group_ids = var.security_group_ids
+  }
 }
 
 data "aws_iam_policy_document" "lambda_core_assume_role_policy" {
@@ -303,6 +331,11 @@ resource "aws_iam_role" "lambda_exec" {
   }
   
   inline_policy {
+    name   = "lambda_ec2_inline_policy"
+    policy = data.aws_iam_policy_document.lambda_ec2_inline_policy.json
+  }
+  
+  inline_policy {
     name   = "lambda_core_cw_log_stream_inline_policy"
     policy = data.aws_iam_policy_document.lambda_core_cw_log_stream_inline_policy.json
   }
@@ -319,6 +352,11 @@ resource "aws_iam_role" "lambda_channels_exec" {
   inline_policy {
     name   = "lambda_core_ddb_inline_policy"
     policy = data.aws_iam_policy_document.lambda_core_ddb_inline_policy.json
+  }
+
+  inline_policy {
+    name   = "lambda_ec2_inline_policy"
+    policy = data.aws_iam_policy_document.lambda_ec2_inline_policy.json
   }
   
   inline_policy {
@@ -344,7 +382,12 @@ resource "aws_iam_role" "lambda_topics_exec" {
     name   = "lambda_core_ddb_inline_policy"
     policy = data.aws_iam_policy_document.lambda_core_ddb_inline_policy.json
   }
-  
+
+  inline_policy {
+    name   = "lambda_ec2_inline_policy"
+    policy = data.aws_iam_policy_document.lambda_ec2_inline_policy.json
+  }
+    
   inline_policy {
     name   = "lambda_invoke_inline_policy"
     policy = data.aws_iam_policy_document.lambda_invoke_inline_policy.json
@@ -368,7 +411,12 @@ resource "aws_iam_role" "lambda_packager_exec" {
     name   = "lambda_core_sqs_inline_policy"
     policy = data.aws_iam_policy_document.lambda_core_sqs_inline_policy.json
   }
-  
+
+  inline_policy {
+    name   = "lambda_ec2_inline_policy"
+    policy = data.aws_iam_policy_document.lambda_ec2_inline_policy.json
+  }
+    
   inline_policy {
     name   = "lambda_core_ddb_packager_inline_policy"
     policy = data.aws_iam_policy_document.lambda_core_ddb_packager_inline_policy.json
