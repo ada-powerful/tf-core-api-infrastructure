@@ -30,3 +30,5 @@ override.tf.json
 
 # Ignore gedit generated files
 *~
+.terraform.lock.hcl
+.aws/
