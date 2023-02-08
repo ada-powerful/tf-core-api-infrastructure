@@ -100,3 +100,14 @@ module "packager_api" {
   authorizer_id        =  "${aws_api_gateway_authorizer.authorizer.id}"
   request_validator_id = "${aws_api_gateway_request_validator.core_api_request_validator.id}"
 }
+
+resource "aws_api_gateway_method_settings" "all" {
+  rest_api_id = "${aws_api_gateway_rest_api.site_core_api_gateway.id}"
+  stage_name  = "prod"
+  method_path = "*/*"
+
+  settings {
+    caching_enabled = true
+  }
+}
+

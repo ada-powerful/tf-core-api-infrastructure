@@ -19,3 +19,22 @@ variable "security_group_ids" {
   description = "The sg Ids."
   default     = ["sg-01d5c834de60cf2f5"]
 }
+
+variable "dax_layer_arn" {
+  type        = string
+  default       = "arn:aws:lambda:us-west-2:146525178697:layer:dax:1"
+  description = "The arn of the dax layer."
+}
+
+variable "basic_basic_layer_arn" {
+  type        = string
+  default       = "arn:aws:lambda:us-west-2:146525178697:layer:basic_dao:7"
+  description = "The arn of the basic dao layer."
+}
+
+variable "dax_cluster_arn" {
+  type        = string
+  default       = "arn:aws:dax:us-west-2:146525178697:cache/huhuai-dax"
+  description = "The arn of the dax cluster."
+}
+

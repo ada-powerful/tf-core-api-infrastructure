@@ -51,6 +51,8 @@ resource "aws_lambda_function" "channels" {
   runtime = "python3.9"
 
   role = "${aws_iam_role.lambda_channels_exec.arn}"
+  
+  layers = [var.dax_layer_arn, var.basic_basic_layer_arn]
   vpc_config {
     subnet_ids = var.subnet_ids
     security_group_ids = var.security_group_ids
@@ -74,6 +76,7 @@ resource "aws_lambda_function" "categories" {
   runtime = "python3.9"
 
   role = "${aws_iam_role.lambda_exec.arn}"
+  layers = [var.dax_layer_arn, var.basic_basic_layer_arn]
   vpc_config {
     subnet_ids = var.subnet_ids
     security_group_ids = var.security_group_ids
@@ -97,6 +100,7 @@ resource "aws_lambda_function" "articles" {
   runtime = "python3.9"
 
   role = "${aws_iam_role.lambda_exec.arn}"
+  layers = [var.dax_layer_arn, var.basic_basic_layer_arn]
   vpc_config {
     subnet_ids = var.subnet_ids
     security_group_ids = var.security_group_ids
@@ -120,6 +124,7 @@ resource "aws_lambda_function" "topics" {
   runtime = "python3.9"
 
   role = "${aws_iam_role.lambda_topics_exec.arn}"
+  layers = [var.dax_layer_arn, var.basic_basic_layer_arn]
   vpc_config {
     subnet_ids = var.subnet_ids
     security_group_ids = var.security_group_ids
@@ -141,8 +146,10 @@ resource "aws_lambda_function" "operators" {
   # exported in that file.
   handler = "main.dispatch"
   runtime = "python3.9"
+  timeout = 10
 
   role = "${aws_iam_role.lambda_exec.arn}"
+  layers = [var.dax_layer_arn, var.basic_basic_layer_arn]
   vpc_config {
     subnet_ids = var.subnet_ids
     security_group_ids = var.security_group_ids
@@ -166,6 +173,7 @@ resource "aws_lambda_function" "prompts" {
   runtime = "python3.9"
 
   role = "${aws_iam_role.lambda_exec.arn}"
+  layers = [var.dax_layer_arn, var.basic_basic_layer_arn]
   vpc_config {
     subnet_ids = var.subnet_ids
     security_group_ids = var.security_group_ids
@@ -189,6 +197,7 @@ resource "aws_lambda_function" "packager" {
   runtime = "python3.9"
 
   role = "${aws_iam_role.lambda_packager_exec.arn}"
+  layers = [var.dax_layer_arn, var.basic_basic_layer_arn]
   vpc_config {
     subnet_ids = var.subnet_ids
     security_group_ids = var.security_group_ids
@@ -217,7 +226,8 @@ data "aws_iam_policy_document" "lambda_core_ddb_inline_policy" {
         "dynamodb:PutItem",
         "dynamodb:UpdateItem",
         "dynamodb:Query",
-        "dynamodb:DeleteItem"
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable"
     ]
     resources = [
         format("arn:aws:dynamodb:us-west-2:%s:table/Channels",data.aws_caller_identity.current.account_id),
@@ -236,6 +246,17 @@ data "aws_iam_policy_document" "lambda_core_ddb_inline_policy" {
         format("arn:aws:dynamodb:us-west-2:%s:table/Prompts/index/*",data.aws_caller_identity.current.account_id),
         format("arn:aws:dynamodb:us-west-2:%s:table/Canvases/index/*",data.aws_caller_identity.current.account_id),
         format("arn:aws:dynamodb:us-west-2:%s:table/Watermarks/index/*",data.aws_caller_identity.current.account_id)
+    ]
+  }
+  statement {
+    actions = [
+        "dax:GetItem",
+        "dax:BatchGetItem",
+        "dax:Query",
+        "dax:Scan",
+    ]
+    resources = [ 
+        var.dax_cluster_arn
     ]
   }
 }
