@@ -28,7 +28,7 @@ variable "dax_layer_arn" {
 
 variable "basic_basic_layer_arn" {
   type        = string
-  default       = "arn:aws:lambda:us-west-2:146525178697:layer:basic_dao:7"
+  default       = "arn:aws:lambda:us-west-2:146525178697:layer:basic_dao:11"
   description = "The arn of the basic dao layer."
 }
 

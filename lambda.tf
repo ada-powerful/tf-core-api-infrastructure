@@ -225,7 +225,6 @@ data "aws_iam_policy_document" "lambda_core_ddb_inline_policy" {
         "dynamodb:BatchWriteItem",
         "dynamodb:PutItem",
         "dynamodb:UpdateItem",
-        "dynamodb:Query",
         "dynamodb:DeleteItem",
         "dynamodb:DescribeTable"
     ]
@@ -254,6 +253,11 @@ data "aws_iam_policy_document" "lambda_core_ddb_inline_policy" {
         "dax:BatchGetItem",
         "dax:Query",
         "dax:Scan",
+        "dax:BatchWriteItem",
+        "dax:PutItem",
+        "dax:UpdateItem",
+        "dax:DeleteItem",
+        "dax:DescribeTable"
     ]
     resources = [ 
         var.dax_cluster_arn
@@ -282,6 +286,15 @@ data "aws_iam_policy_document" "lambda_core_ddb_packager_inline_policy" {
         "dynamodb:UpdateItem"
     ]
     resources = [
+        format("arn:aws:dynamodb:us-west-2:%s:table/Topics",data.aws_caller_identity.current.account_id)
+    ]
+  }
+  statement {
+    actions = [
+        "dax:PutItem",
+        "dax:UpdateItem"
+    ]
+    resources = [ 
         format("arn:aws:dynamodb:us-west-2:%s:table/Topics",data.aws_caller_identity.current.account_id)
     ]
   }
