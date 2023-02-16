@@ -283,7 +283,7 @@ data "aws_iam_policy_document" "lambda_core_ddb_packager_inline_policy" {
   statement {
     actions   = [
         "dynamodb:PutItem",
-        "dynamodb:UpdateItem"
+        "dynamodb:UpdateItem",
         "dynamodb:DescribeTable"
     ]
     resources = [
@@ -293,7 +293,7 @@ data "aws_iam_policy_document" "lambda_core_ddb_packager_inline_policy" {
   statement {
     actions = [
         "dax:PutItem",
-        "dax:UpdateItem"
+        "dax:UpdateItem",
         "dax:DescribeTable"
     ]
     resources = [ 
