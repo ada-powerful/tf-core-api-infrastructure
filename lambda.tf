@@ -284,6 +284,7 @@ data "aws_iam_policy_document" "lambda_core_ddb_packager_inline_policy" {
     actions   = [
         "dynamodb:PutItem",
         "dynamodb:UpdateItem"
+        "dynamodb:DescribeTable"
     ]
     resources = [
         format("arn:aws:dynamodb:us-west-2:%s:table/Topics",data.aws_caller_identity.current.account_id)
@@ -293,9 +294,10 @@ data "aws_iam_policy_document" "lambda_core_ddb_packager_inline_policy" {
     actions = [
         "dax:PutItem",
         "dax:UpdateItem"
+        "dax:DescribeTable"
     ]
     resources = [ 
-        format("arn:aws:dynamodb:us-west-2:%s:table/Topics",data.aws_caller_identity.current.account_id)
+        var.dax_cluster_arn
     ]
   }
 }
