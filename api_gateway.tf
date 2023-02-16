@@ -7,7 +7,7 @@ resource "aws_api_gateway_authorizer" "authorizer" {
   name          = "CoolAPIAuthorizer"
   type          = "COGNITO_USER_POOLS"
   rest_api_id   = aws_api_gateway_rest_api.site_core_api_gateway.id
-  provider_arns = ["${var.user_pool_provider_arns}"]
+  provider_arns = ["arn:aws:cognito-idp:us-west-2:146525178697:userpool/us-west-2_n3vDTQtpQ"]
 }
 
 resource "aws_api_gateway_request_validator" "core_api_request_validator" {
