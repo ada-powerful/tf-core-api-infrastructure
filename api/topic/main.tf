@@ -1,7 +1,7 @@
 locals {
   resource_name           = "topics"
   leaf_resource_name      = "topic_id"
-  level_one_http_methods  = ["GET", "POST", "DELETE"]
+  level_one_http_methods  = ["GET", "POST", "PATCH", "DELETE"]
   level_two_http_methods  = ["GET", "PATCH", "DELETE"]
 }
 
@@ -59,6 +59,7 @@ resource "aws_api_gateway_deployment" "this" {
   depends_on = [
     module.topics_get_api,
     module.topics_post_api,
+    module.topics_patch_api,
     module.topics_delete_api,
     module.topic_get_api,
     module.topic_patch_api,
