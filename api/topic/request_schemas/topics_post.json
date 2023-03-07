@@ -5,13 +5,11 @@
   "items": {
     "type": "object",
     "properties": {
-      "channel_type": { "type": "string" },
-      "channel_account_id": { "type": "string" },
-      "category": { "type": "string" },
+      "channels": { "type": "string" },
       "operator_name": { "type": "string" },
       "title":    { "type": "string" },
       "mode":    { "type": "string" }
     },
-    "required": ["channel_type", "channel_account_id", "category", "title", "operator_name"]
+    "required": ["channels", "title", "operator_name"]
   }
 }
