@@ -2,7 +2,7 @@ locals {
   resource_name           = "articles"
   leaf_resource_name      = "article_id"
   level_one_http_methods  = ["GET", "POST"]
-  level_two_http_methods  = ["GET", "PATCH"]
+  level_two_http_methods  = ["GET"]
 }
 
 resource "aws_lambda_permission" "articles" {
@@ -59,8 +59,7 @@ resource "aws_api_gateway_deployment" "this" {
   depends_on = [
     module.articles_get_api,
     module.articles_post_api,
-    module.article_get_api,
-    module.article_patch_api,
+    module.article_get_api
   ]
 
   rest_api_id = var.api_id
