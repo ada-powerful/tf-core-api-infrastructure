@@ -9,7 +9,6 @@ module "operators_get_api" {
   authorizer_id       = "${var.authorizer_id}"
   request_parameters   = {
                            "method.request.header.Authorization"  = true
-                           "method.request.querystring.operator_name" = true
                            "method.request.querystring.channels" = false
                            "method.request.querystring.prompts" = false
                            "method.request.querystring.canvases" = false

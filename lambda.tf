@@ -472,24 +472,3 @@ resource "aws_iam_role" "lambda_packager_exec" {
   }
 }
 
-resource "aws_lambda_event_source_mapping" "ddb_topics_table_to_packager" {
-  event_source_arn  = var.ddb_topics_table_stream_arn
-  function_name     = aws_lambda_function.packager.arn
-  starting_position = "LATEST"
-  filter_criteria {
-    filter {
-      pattern = jsonencode(
-        {
-          userIdentity = {
-            principalId = [
-              "dynamodb.amazonaws.com"
-            ]
-            type        = [
-              "Service"
-            ]
-          }
-        }
-      )
-    }
-  }
-}

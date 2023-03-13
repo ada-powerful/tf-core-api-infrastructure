@@ -6,7 +6,6 @@ module "topics_get_api" {
   lambda_function_arn  = var.lambda_function_arn
   request_validator_id = var.request_validator_id
   request_parameters   = {
-                           "method.request.querystring.operator_name" = true
                            "method.request.header.Authorization"  = true
                            "method.request.querystring.channel_type" = false
                            "method.request.querystring.channel_account_id" = false

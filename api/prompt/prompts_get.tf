@@ -9,7 +9,6 @@ module "prompts_get_api" {
   request_validator_id = var.request_validator_id
   request_parameters   = {
                            "method.request.header.Authorization"  = true
-                           "method.request.querystring.operator_name" = true
                          }
   request_models       = {}
   response_models      = {

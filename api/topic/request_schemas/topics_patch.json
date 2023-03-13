@@ -13,6 +13,6 @@
       "next_article_id": { "type": "string" },
       "topic_id": { "type": "string" }
     },
-    "required": ["topic_id", "channels", "title", "content"]
+    "required": ["topic_id", "content"]
   }
 }
